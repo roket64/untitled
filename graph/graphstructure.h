@@ -47,7 +47,7 @@ public:
 
     wtype GetWeight() { return weight; }
 
-    // in priority queue, this gives more priority to lower edge weight
+    // in priority queue, this gives higher priority to lower weight edge
     bool operator<(const Node &n) const { return n.weight < weight; }
 
     ~Node() {}
