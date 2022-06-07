@@ -23,8 +23,6 @@ private:
              && (std::is_integral<T2>::value
                  || std::is_floating_point<T2>::value), T2>;
 
-    ntype start;
-    wtype end;
     std::vector<std::vector<Node<ntype, wtype>>> adj_list;
     std::vector<wtype> distance;
 
@@ -42,14 +40,14 @@ public:
 
     void MakeEdge(ntype _Start, ntype _End, wtype _Weight, bool _Bidirectional) {
         if (_Bidirectional) {
-            adj_list[start].push_back({end, _Weight});
-            adj_list[end].push_back({start, _Weight});
+            adj_list[_Start].push_back({_End, _Weight});
+            adj_list[_End].push_back({_Start, _Weight});
         } else {
-            adj_list[start].push_back({end, _Weight});
+            adj_list[_Start].push_back({_End, _Weight});
         }
     }
 
-    wtype GetMinDistance(ntype _Start, ntype _End) {
+    void GetMinDistance(ntype _Start) {
         std::priority_queue<Node<ntype, wtype>> pq;
         distance[_Start] = 0;
         pq.push({_Start, distance[_Start]});
@@ -70,7 +68,5 @@ public:
                 pq.push({next_node, distance[next_node]});
             }
         }
-
-        return distance[_End];
     }
 };

@@ -23,8 +23,7 @@ private:
                || std::is_same<char16_t, T2>::value
                || std::is_same<char32_t, T2>::value
                || std::is_same<std::string, T2>::value)
-             && (std::is_integral<T2>::value
-                 || std::is_floating_point<T2>::value), T2>;
+             && (std::is_arithmetic<T2>::value), T2>;
 
     ntype node;
     wtype weight;
