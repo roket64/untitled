@@ -5,18 +5,9 @@
 #include <string>
 #include <type_traits>
 
-template<class T, class Enable = void>
-class TestClass {
-
-};
-
-template<class T>
-class TestClass<T, typename std::enable_if<std::is_floating_point<T>::value>::type> {
-
-};
-
 template<class T1, class T2>
 class Node {
+private:
     // can use all integral types but not floating point or bool type
     using ntype = typename std::enable_if_t
             <!(std::is_floating_point<T1>::value
@@ -35,7 +26,6 @@ class Node {
              && (std::is_integral<T2>::value
                  || std::is_floating_point<T2>::value), T2>;
 
-private:
     ntype node;
     wtype weight;
 
@@ -70,13 +60,19 @@ public:
 template<class T1, class T2>
 class TreeNode : Node<T1, T2> {
 private:
-    T1 parent;
-    T1 left_child;
-    T1 right_child;
+    Node<T1, T2> parent;
+    Node<T1, T2> left_child;
+    Node<T1, T2> right_child;
 
 public:
-    TreeNode(T1 _Parent, T1 _Leftchild, T1 _Rightchild)
-            : parent(_Parent), left_child(_Leftchild), right_child(_Rightchild) {}
+    TreeNode(T1 _Id, T1 _Parent, T1 _Leftchild, T1 _Rightchild, T2 _Weight)
+            : Node<T1, T2>(_Id, _Weight), parent(_Parent), left_child(_Leftchild), right_child(_Rightchild) {}
+
+    Node<T1, T2> GetParent() { return parent; }
+
+    Node<T1, T2> Getlc() { return left_child; }
+
+    Node<T1, T2> Getrc() { return right_child; }
 
     ~TreeNode() {}
 };
@@ -92,7 +88,6 @@ public:
 
     ~TreapNode() {}
 };
-
 
 template<class T>
 class Point {
