@@ -1,3 +1,6 @@
+#ifndef UNTITLED_SCC_FINDER_H
+#define UNTITLED_SCC_FINDER_H
+
 #include <vector>
 #include <stack>
 #include <string>
@@ -76,18 +79,18 @@ public:
     }
 
     void MakeEdge(T start_, T end_) {
-        m_adj[start_].push_back(end_);
+//        m_adj[start_].push_back(end_);
     }
 
     void find() {
         switch (m_start) {
             case 0:
-                for (int i = m_start; i < m_end; i++) {
+                for (int i = m_start; i < m_end; i++) { // 0 to n - 1
                     if (m_parent[i]) dfs(i);
                 }
                 break;
             case 1:
-                for (int i = m_start; i <= m_end; i++) {
+                for (int i = m_start; i <= m_end; i++) { // 1 to n
                     if (m_parent[i]) dfs(i);
                 }
                 break;
@@ -96,3 +99,5 @@ public:
 
     std::vector<std::vector<T>> scc() { return m_scc; }
 };
+
+#endif //UNTITLED_SCC_FINDER_H
