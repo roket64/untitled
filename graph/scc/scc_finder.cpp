@@ -1,6 +1,33 @@
 #include "scc_finder.h"
 
 template<class T>
+scc_finder<T>::scc_finder(T start_, T end_) {
+    m_start = start_;
+    m_end = end_;
+    m_id = 0;
+    m_sn = 0;
+
+    switch (start_) {
+        case 0: // 0 to n - 1
+            m_fin.assign(end_, 0);
+            m_adj.assign(end_, std::vector<T>());
+            m_parent.assign(end_, 0);
+            m_belong.assign(end_, 0);
+            break;
+
+        case 1: // 1 to n
+            m_fin.assign(end_ + 1, 0);
+            m_adj.assign(end_ + 1, std::vector<T>());
+            m_parent.assign(end_ + 1, 0);
+            m_belong.assign(end_ + 1, 0);
+            break;
+
+        default:
+            break;
+    }
+}
+
+template<class T>
 void scc_finder<T>::MakeEdge(T start_, T end_) {
     m_adj[start_].push_back(end_);
 }

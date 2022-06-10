@@ -27,34 +27,15 @@ private:
     T m_end;
 
 public:
-    scc_finder(T start_, T end_) : m_id(0), m_sn(0), m_start(start_), m_end(end_) {
-        switch (start_) {
-            case 0: // 0 to n - 1
-                m_fin.assign(end_, 0);
-                m_adj.assign(end_, std::vector<T>());
-                m_parent.assign(end_, 0);
-                m_belong.assign(end_, 0);
-                break;
-
-            case 1: // 1 to n
-                m_fin.assign(end_ + 1, 0);
-                m_adj.assign(end_ + 1, std::vector<T>());
-                m_parent.assign(end_ + 1, 0);
-                m_belong.assign(end_ + 1, 0);
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    void extract(T cur);
-
-    T dfs(T cur);
+    scc_finder(T start_, T end_);
 
     void MakeEdge(T start_, T end_);
 
     void find();
+
+    void extract(T cur);
+
+    T dfs(T cur);
 
     T sn() { return m_sn; }
 
