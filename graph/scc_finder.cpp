@@ -2,21 +2,23 @@
 #include <stack>
 #include <algorithm>
 
-class SCC_FINDER {
+template<class T>
+class scc_finder {
 private:
     std::vector<bool> m_fin;
-    std::vector<std::vector<int>> m_adj;
-    std::vector<std::vector<int>> m_scc;
-    std::vector<int> m_parent, m_belong;
-    std::stack<int> m_stk;
-    int m_id;
-    int m_sn;
+    std::vector<std::vector<T>> m_adj;
+    std::vector<std::vector<T>> m_scc;
+    std::vector<T> m_parent, m_belong;
+    std::stack<T> m_stk;
+    T m_id;
+    T m_sn;
+    T m_size;
 
-    void extract(int cur) {
+    void extract(T cur) {
         m_sn++;
-        std::vector<int> tmp;
+        std::vector<T> tmp;
         while (1) {
-            int top = m_stk.top();
+            T top = m_stk.top();
             m_stk.pop();
             m_fin[top] = 1;
             m_belong[top] = m_sn;
@@ -27,22 +29,10 @@ private:
         m_scc.push_back(tmp);
     }
 
-public:
-    SCC_FINDER(int size_) : m_id(0), m_sn(0) {
-        m_fin.assign(size_ + 1, 0);
-        m_adj.assign(size_ + 1, std::vector<int>());
-        m_parent.assign(size_ + 1, 0);
-        m_belong.assign(size_ + 1, 0);
-    }
-
-    void MakeEdge(int start_, int end_) {
-        m_adj[start_].push_back(end_);
-    }
-
-    int dfs(int cur) {
+    T dfs(T cur) {
         m_parent[cur] = ++m_id;
         m_stk.push(cur);
-        int ret = m_parent[cur];
+        T ret = m_parent[cur];
 
         for (auto &next: m_adj[cur]) {
             if (!m_parent[next]) ret = std::min(ret, dfs(next));
@@ -54,5 +44,23 @@ public:
         return ret;
     }
 
-    std::vector<std::vector<int>> scc() { return m_scc; }
+public:
+    scc_finder(T size_) : m_id(0), m_sn(0), m_size(size_) {
+        m_fin.assign(size_ + 1, 0);
+        m_adj.assign(size_ + 1, std::vector<int>());
+        m_parent.assign(size_ + 1, 0);
+        m_belong.assign(size_ + 1, 0);
+    }
+
+    void MakeEdge(T start_, T end_) {
+        m_adj[start_].push_back(end_);
+    }
+
+    void find() {
+        for (int i = 1; i <= m_size; i++) {
+            if(!m_belong[i]) dfs(i);
+        }
+    }
+
+    std::vector<std::vector<T>> scc() { return m_scc; }
 };
