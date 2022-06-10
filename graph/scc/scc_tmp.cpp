@@ -1,1 +1,0 @@
-#include "scc_finder.h"
