@@ -58,7 +58,7 @@ public:
 
     void find() {
         for (int i = 1; i <= m_size; i++) {
-            if(!m_belong[i]) dfs(i);
+            if (!m_belong[i]) dfs(i);
         }
     }
 
