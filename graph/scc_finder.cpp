@@ -47,7 +47,7 @@ private:
 public:
     scc_finder(T size_) : m_id(0), m_sn(0), m_size(size_) {
         m_fin.assign(size_ + 1, 0);
-        m_adj.assign(size_ + 1, std::vector<int>());
+        m_adj.assign(size_ + 1, std::vector<T>());
         m_parent.assign(size_ + 1, 0);
         m_belong.assign(size_ + 1, 0);
     }
