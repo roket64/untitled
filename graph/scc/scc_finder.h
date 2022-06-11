@@ -26,16 +26,16 @@ private:
     T m_start;
     T m_end;
 
+    void extract(T cur);
+
+    T dfs(T cur);
+
 public:
     scc_finder(T start_, T end_);
 
     void MakeEdge(T start_, T end_);
 
     void find();
-
-    void extract(T cur);
-
-    T dfs(T cur);
 
     T sn() { return m_sn; }
 
