@@ -22,7 +22,7 @@ private:
     std::vector<T> m_parent, m_belong;
     std::stack<T> m_stk;
     T m_id;
-    T m_sn;
+    T m_cnt;
     T m_start;
     T m_end;
 
@@ -37,7 +37,7 @@ public:
 
     void find();
 
-    T sn() { return m_sn; }
+    T sn() { return m_cnt; }
 
     T start() { return m_start; }
 

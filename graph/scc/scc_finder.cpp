@@ -1,12 +1,8 @@
 #include "scc_finder.h"
 
 template<class T>
-scc_finder<T>::scc_finder(T start_, T end_) {
-    m_start = start_;
-    m_end = end_;
-    m_id = 0;
-    m_sn = 0;
-
+scc_finder<T>::scc_finder(T start_, T end_)
+        :m_id(0), m_cnt(0), m_start(start_), m_end(end_) {
     switch (start_) {
         case 0: // 0 to n - 1
             m_fin.assign(end_, 0);
@@ -34,13 +30,13 @@ void scc_finder<T>::MakeEdge(T start_, T end_) {
 
 template<class T>
 void scc_finder<T>::extract(T cur) {
-    m_sn++;
+    m_cnt++;
     std::vector<T> tmp;
     while (1) {
         T top = m_stk.top();
         m_stk.pop();
         m_fin[top] = 1;
-        m_belong[top] = m_sn;
+        m_belong[top] = m_cnt;
         tmp.push_back(top);
         if (top == cur) break;
     }
@@ -69,12 +65,12 @@ void scc_finder<T>::find() {
     switch (m_start) {
         case 0:
             for (int i = m_start; i < m_end; i++) { // 0 to n - 1
-                if (m_parent[i]) dfs(i);
+                if (!m_parent[i]) dfs(i);
             }
             break;
         case 1:
             for (int i = m_start; i <= m_end; i++) { // 1 to n
-                if (m_parent[i]) dfs(i);
+                if (!m_parent[i]) dfs(i);
             }
             break;
     }
