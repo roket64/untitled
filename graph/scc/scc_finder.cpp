@@ -3,15 +3,22 @@
 template<class T>
 scc_finder<T>::scc_finder(T start_, T end_)
         :m_id(0), m_cnt(0), m_start(start_), m_end(end_) {
+    static_assert(!(std::is_unsigned<T>::value
+                    || std::is_same<bool, T>::value
+                    || std::is_same<char, T>::value
+                    || std::is_same<char16_t, T>::value
+                    || std::is_same<char32_t, T>::value
+                    || std::is_same<std::string, T>::value));
+
     switch (start_) {
-        case 0: // 0 to n - 1
+        case 0:
             m_fin.assign(end_, 0);
             m_adj.assign(end_, std::vector<T>());
             m_parent.assign(end_, 0);
             m_belong.assign(end_, 0);
             break;
 
-        case 1: // 1 to n
+        case 1:
             m_fin.assign(end_ + 1, 0);
             m_adj.assign(end_ + 1, std::vector<T>());
             m_parent.assign(end_ + 1, 0);
@@ -21,6 +28,24 @@ scc_finder<T>::scc_finder(T start_, T end_)
         default:
             break;
     }
+}
+
+template<class T>
+scc_finder<T>::~scc_finder() {
+    m_fin.clear();
+    std::vector<bool>().swap(m_fin);
+
+    m_adj.clear();
+    std::vector<std::vector<T>>().swap(m_adj);
+
+    m_scc.clear();
+    std::vector<std::vector<T>>().swap(m_scc);
+
+    m_parent.clear();
+    std::vector<T>().swap(m_parent);
+
+    m_belong.clear();
+    std::vector<T>().swap(m_belong);
 }
 
 template<class T>

@@ -9,13 +9,6 @@
 template<class T>
 class scc_finder {
 private:
-    static_assert(!(std::is_unsigned<T>::value
-                    || std::is_same<bool, T>::value
-                    || std::is_same<char, T>::value
-                    || std::is_same<char16_t, T>::value
-                    || std::is_same<char32_t, T>::value
-                    || std::is_same<std::string, T>::value));
-
     std::vector<bool> m_fin;
     std::vector<std::vector<T>> m_adj;
     std::vector<std::vector<T>> m_scc;
@@ -33,6 +26,8 @@ private:
 
 public:
     scc_finder(T start_, T end_);
+
+    ~scc_finder();
 
     void MakeEdge(T start_, T end_);
 
