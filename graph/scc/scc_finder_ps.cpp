@@ -11,7 +11,7 @@ struct scc_finder_ps {
 
     T id, cnt, end;
 
-    scc_finder_ps(T n): end(n) {
+    scc_finder_ps(T n): id(0), cnt(0), end(n) {
         fin.assign(n + 1, 0);
         adj.assign(n + 1, std::vector<T>());
         par.assign(n + 1, 0);
