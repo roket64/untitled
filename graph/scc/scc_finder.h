@@ -19,7 +19,8 @@ private:
     std::vector<bool> m_fin;
     std::vector<std::vector<T>> m_adj;
     std::vector<std::vector<T>> m_scc;
-    std::vector<T> m_parent, m_belong;
+    std::vector<T> m_parent;
+    std::vector<T> m_belong;
     std::stack<T> m_stk;
     T m_id;
     T m_cnt;

@@ -3,32 +3,32 @@
 #include <algorithm>
 
 template<class T>
-struct scc_finder {
+struct scc_finder_ps {
     std::vector<bool> fin;
     std::vector<std::vector<T>> adj, scc;
-    std::vector<T> parent, belong;
+    std::vector<T> par, belong;
     std::stack<T> s;
 
     T id, cnt, end;
 
-    scc_finder(T n): end(n) {
+    scc_finder_ps(T n): end(n) {
         fin.assign(n + 1, 0);
         adj.assign(n + 1, std::vector<T>());
-        parent.assign(n + 1, 0);
+        par.assign(n + 1, 0);
         belong.assign(n + 1, 0);
     }
 
     T dfs(T cur) {
-        parent[cur] = ++id;
+        par[cur] = ++id;
         s.push(cur);
-        T ret = parent[cur];
+        T ret = par[cur];
 
         for (auto &next: adj[cur]) {
-            if (!parent[next]) ret = std::min(ret, dfs(next));
-            else if (!fin[next]) ret = std::min(ret, parent[next]);
+            if (!par[next]) ret = std::min(ret, dfs(next));
+            else if (!fin[next]) ret = std::min(ret, par[next]);
         }
 
-        if (ret == parent[cur]) {
+        if (ret == par[cur]) {
             cnt++;
             std::vector<T> tmp;
             while (1) {
@@ -47,7 +47,7 @@ struct scc_finder {
 
     void find() {
         for (int i = 1; i <= end; i++) {
-            if (!parent[i]) dfs(i);
+            if (!par[i]) dfs(i);
         }
     }
 };
