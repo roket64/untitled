@@ -10,6 +10,8 @@ scc_finder<T>::scc_finder(T start_, T end_)
                     || std::is_same<char32_t, T>::value
                     || std::is_same<std::string, T>::value));
 
+    static_assert(start_ == 0 || start_ == 1);
+
     switch (start_) {
         case 0:
             m_fin.assign(end_, 0);
@@ -23,9 +25,6 @@ scc_finder<T>::scc_finder(T start_, T end_)
             m_adj.assign(end_ + 1, std::vector<T>());
             m_parent.assign(end_ + 1, 0);
             m_belong.assign(end_ + 1, 0);
-            break;
-
-        default:
             break;
     }
 }
@@ -55,7 +54,6 @@ void scc_finder<T>::MakeEdge(T start_, T end_) {
 
 template<class T>
 void scc_finder<T>::extract(T cur) {
-    m_cnt++;
     std::vector<T> tmp;
     while (1) {
         T top = m_stk.top();
@@ -65,6 +63,7 @@ void scc_finder<T>::extract(T cur) {
         tmp.push_back(top);
         if (top == cur) break;
     }
+
     std::sort(tmp.begin(), tmp.end());
     m_scc.push_back(tmp);
 }
@@ -80,7 +79,10 @@ T scc_finder<T>::dfs(T cur) {
         else if (!m_fin[next]) ret = std::min(ret, m_parent[next]);
     }
 
-    if (ret == m_parent[cur]) { extract(cur); }
+    if (ret == m_parent[cur]) {
+        m_cnt++;
+        extract(cur);
+    }
 
     return ret;
 }
@@ -93,6 +95,7 @@ void scc_finder<T>::find() {
                 if (!m_parent[i]) dfs(i);
             }
             break;
+
         case 1:
             for (int i = m_start; i <= m_end; i++) { // 1 to n
                 if (!m_parent[i]) dfs(i);
