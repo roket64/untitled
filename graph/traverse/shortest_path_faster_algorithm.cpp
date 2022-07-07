@@ -1,5 +1,4 @@
 #include "shortest_path_faster_algorithm.h"
-#include <queue>
 #include <deque>
 
 #define INF 0x3f3f3f3f
@@ -44,7 +43,6 @@ bool spfa<T>::FindShortestPath(T start_) {
     std::deque<T> deq;
     m_inq[start_] = true;
     m_distance[start_] = 0;
-    ++m_occurred[start_];
     deq.push_back(start_);
 
     while (!deq.empty()) {
@@ -54,10 +52,12 @@ bool spfa<T>::FindShortestPath(T start_) {
 
         for (auto &[next_node, next_weight]: m_adj[cur_node]) {
             T cost = m_distance[cur_node] + next_weight;
+            // update distance only if new cost is shorter than before
             if (m_distance[next_node] < cost) continue;
             m_distance[next_node] = cost;
 
             if (!m_inq[next_node]) {
+                // return false when negative cycle is found
                 if (++m_occurred[next_node] >= m_size) {
                     return false;
                 }
