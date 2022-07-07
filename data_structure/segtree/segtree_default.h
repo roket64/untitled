@@ -1,0 +1,8 @@
+//
+// Created by js on 2022-07-07.
+//
+
+#ifndef UNTITLED_SEGTREE_DEFAULT_H
+#define UNTITLED_SEGTREE_DEFAULT_H
+
+#endif //UNTITLED_SEGTREE_DEFAULT_H
