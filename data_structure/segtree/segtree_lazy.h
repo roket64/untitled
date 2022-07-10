@@ -9,7 +9,6 @@ class segment_tree_lazy {
 private:
     typedef ArrayType A;
 
-    int m_size;
     int m_last_idx;
     std::vector<A> m_arr;
     std::vector<A> m_tree;
@@ -42,7 +41,7 @@ private:
         m_lazy[idx] = 0;
     }
 
-    // 구간 [start, end]의 값을 diff만큼 증가시키는 함수
+    // 구간 [start, end]의 값을 diff만큼 증가시키는 업데이트
     A update(int idx, int start, int end, int left, int right, A diff) {
         // idx의 propagate 수행
         propagate(idx, start, end);
@@ -70,7 +69,7 @@ private:
         return m_tree[idx] = lhs + rhs;
     }
 
-    // 구간 [left, right]의 합을 묻는 쿼리를 답하는 함수
+    // 구간 [left, right]의 합을 구하는 쿼리
     A query(int idx, int start, int end, int left, int right) {
         // idx의 propagation 수행
         propagate(idx, start, end);
@@ -88,18 +87,18 @@ private:
     }
 
 public:
-    explicit segment_tree_lazy(std::vector<A> &arr_)
-            : m_last_idx(static_cast<int>(arr_.size()) - 1) {
-        m_arr.assign(arr_.begin(), arr_.end());
-        m_tree.assign(1 << (int) ceil(log2(static_cast<int>(arr_.size())) + 1), 0);
-        m_lazy.assign(1 << (int) ceil(log2(static_cast<int>(arr_.size())) + 1), 0);
+    explicit segment_tree_lazy(std::vector<A> &arr)
+            : m_last_idx(static_cast<int>(arr.size()) - 1) {
+        m_arr.assign(arr.begin(), arr.end());
+        m_tree.assign(1 << (int) ceil(log2(static_cast<int>(arr.size())) + 1), 0);
+        m_lazy.assign(1 << (int) ceil(log2(static_cast<int>(arr.size())) + 1), 0);
         init(1, 0, m_last_idx);
     }
 
-    // 구간 [left, right]의 값을 diff만큼 증가시키는 함수
+    // 구간 [left, right]의 값을 diff만큼 증가시키는 업데이트
     void update(int left, int right, A diff) { update(1, 0, m_last_idx, left, right, diff); }
 
-    // 구간 [left, right]의 합을 묻는 쿼리에 답하는 함수
+    // 구간 [left, right]의 합을 구하는 쿼리
     A query(int left, int right) { return query(1, 0, m_last_idx, left, right); }
 };
 

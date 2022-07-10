@@ -23,16 +23,22 @@ private:
         return m_tree[idx] = lhs + rhs;
     }
 
+    // idx에 위치한 노드의 값을 diff만큼 증가시키는 업데이트
     A update(int idx, int start, int end, A diff) {
+        // 범위 밖이라면 기존 트리의 값 반환
         if (idx < start || end < idx) return m_tree[idx];
+        // leaf 노드에 도달했다면 업데이트 후 반환
         if (start == end) return m_tree[idx] = diff;
 
+        // 두 개의 하위 노드로 나누어 계속 진행
         int mid = (start + end) / 2;
         A lhs = update(2 * idx, start, mid, diff);
         A rhs = update(2 * idx + 1, mid + 1, end, diff);
+
         return m_tree[idx] = lhs + rhs;
     }
 
+    // 구간 [left, right]의 합을 구하는 쿼리
     A query(int idx, int start, int end, int left, int right) {
         if (right < start || end < left) return 0;
         if (left <= start && end <= right) return m_tree[idx];
@@ -40,6 +46,7 @@ private:
         int mid = (start + end) / 2;
         A lhs = query(2 * idx, start, mid, left, right);
         A rhs = query(2 * idx + 1, mid + 1, end, left, right);
+
         return lhs + rhs;
     }
 
